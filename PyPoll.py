@@ -84,6 +84,8 @@ winning_candidate_summary = (
     f"-------------------------\n")
 print(winning_candidate_summary)
 
+
+
 # Using the with statement open the file as a text file.
 ##with open(file_to_save, "w") as txt_file:
 
