@@ -10,10 +10,68 @@ total_votes = 0
 # Candidate options and candidate votes
 candidate_options = []
 candidate_votes = {}
+#Challenge county options and county votes
+county_names = []
+county_votes = {}
 # Track the winning candidate, vote count, and percentage.
 winning_candidate = ""
 winning_count = 0
 winning_percentage = 0
+
+# Challenge Track the Largest county voter turnout and its percentage
+largest_county_turnout = ""
+largest_county_votes = 0
+largest_county_percentage = 0
+
+# Read csv and convert to list of dictionaries
+with open(file_to_load) as election_data:
+    reader = csv.reader(election_data)
+
+    # Read header
+    header = next(reader)
+    
+    # for each row in the csv file
+    for row in reader:
+        #add to the total votes count
+        total_votes = total_votes + 1
+
+        # Get the candidate name from each row
+        candidate_name = row[2]
+
+        # Get county name from each row
+        county_name = row[1]
+
+        # if the candidate does not match any existing candidate add it into the lis
+        if candidate_name not in candidate_options:
+            #add candidate name to candidate list
+            candidate_options.append(candidate_name)
+            # begin tracking candidate voter count
+            candidate_votes[candidate_name] = 0
+        #add a  vote to that candidate count
+        candidate_votes[candidate_name] += 1
+
+       #Challenge add Counties
+        if county_name not in county_names:
+           # add to the list in running
+            county_names.append(county_name)
+
+           #tracking that candidate voter count
+            county_votes[county_name] = 0
+        # add a vote to the candidate count
+        county_votes[county_name] += 1
+
+#Save the results to our text file
+with open(file_to_save, "w") as text_file:
+    # Print the final vote count
+    election_results = (
+        f"\nElection Results\n"
+        f"\n-------------------------\n"
+        f"Total Votes: {total_votes:,}"
+        f"\n-------------------------\n\n"
+        f"County Votes:\n"
+    )
+    print(election_results, end="")
+    text_file.write(election_results)
 # Open the election results and read the file.
 with open(file_to_load) as election_data:
     file_reader = csv.reader(election_data)
